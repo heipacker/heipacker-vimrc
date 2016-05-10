@@ -9,3 +9,5 @@ ln -s ~/heipacer-vimrc/.vimrc .vimrc
 open .vimrc file
 
 :PluginInstall
+
+![image](https://github.com/heipacker/heipacker-vimrc/raw/master/screenshots/vim-screenshot.jpg)
