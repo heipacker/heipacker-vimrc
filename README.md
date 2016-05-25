@@ -1,4 +1,4 @@
-# heipacker-vimrc-
+# heipacker-vimrc
 
 it is easy to install.
 
