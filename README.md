@@ -12,4 +12,7 @@ open .vimrc file
 
 :PluginInstall
 
+if you want to develop golang, you must modify the GOPATH variable in ~/.vimrc file, make it refer to you GOPATH
+
+
 ![image](https://github.com/heipacker/heipacker-vimrc/blob/master/screenshots/vim-screenshot.png)
