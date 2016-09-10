@@ -13,10 +13,12 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tomasr/molokai'
 Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'jstemmer/gotags'
+Plugin 'jstemmer/gotags'
 Plugin 'mbbill/undotree'
 Plugin 'spf13/vim-autoclose'
+Plugin 'amix/open_file_under_cursor.vim'
 Plugin 'szw/vim-tags'
+Plugin 'Chiel92/vim-autoformat'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -26,6 +28,12 @@ au BufRead,BufNewFile *.go set filetype=go
 
 syntax enable
 set number
+
+" 配置自动格式化
+noremap <F3> :Autoformat<CR>
+" 配置保持的时候自动格式化
+au BufWrite * :Autoformat
+
 let g:go_disable_autoinstall = 1
 let g:go_autodetect_gopath = 1
 let g:go_highlight_extra_types = 1
@@ -51,15 +59,15 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+			\ 'default' : '',
+			\ 'vimshell' : $HOME.'/.vimshell_hist',
+			\ 'scheme' : $HOME.'/.gosh_completions'
+			\ }
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-	    let g:neocomplete#keyword_patterns = {}
-    endif
+	let g:neocomplete#keyword_patterns = {}
+endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
@@ -71,8 +79,8 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
 	return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-" For no inserting <CR> key.
-"return pumvisible() ? "\<C-y>" : "\<CR>"
+	" For no inserting <CR> key.
+	"return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -146,29 +154,29 @@ nmap <F8> :TagbarToggle<CR>
 "配置Undotree
 nnoremap <F7> :UndotreeToggle<cr>
 if has("persistent_undo")
-	    set undodir=~/.undodir/
-	    set undofile
+	set undodir=~/.undodir/
+	set undofile
 endif
 
-let GOPATH = '/home/fupan/golib'
-let g:go_gotags_bin = '/home/fupan/golib/bin/gotags'
+let GOPATH = '/home/heipacker/golib'
+let g:go_gotags_bin = '/home/heipacker/golib/bin/gotags'
 "let g:go_godef_bin = '/home/fupan/golib/bin/godef'
 let ctagsbin = 'gotags'
 " check if vim-go is available and has the binary
 if !executable('gotags') && !exists("g:go_gotags_bin")
-     let ctagsbin = expand(g:go_gotags_bin),
+	let ctagsbin = expand(g:go_gotags_bin),
 endif
 let g:tagbar_type_go = {
-	\'ctagstype' : 'go',
-	\'kinds'     : ['p:package','i:imports:1','c:constants','v:variables','t:types','n:interfaces',
-		\'w:fields','e:embedded','m:methods','r:constructor','f:functions'
-	\],
-	\'sro' : '.',
-	\'kind2scope' : {'t' : 'ctype','n' : 'ntype'},
-	\'scope2kind' : {'ctype' : 't','ntype' : 'n'},
-	\'ctagsbin'  : expand(g:go_gotags_bin),
-	\'ctagsargs' : '-sort -silent'
-\}
+			\'ctagstype' : 'go',
+			\'kinds'     : ['p:package','i:imports:1','c:constants','v:variables','t:types','n:interfaces',
+			\'w:fields','e:embedded','m:methods','r:constructor','f:functions'
+			\],
+			\'sro' : '.',
+			\'kind2scope' : {'t' : 'ctype','n' : 'ntype'},
+			\'scope2kind' : {'ctype' : 't','ntype' : 'n'},
+			\'ctagsbin'  : expand(g:go_gotags_bin),
+			\'ctagsargs' : '-sort -silent'
+			\}
 
 
 " detect file type
@@ -198,7 +206,7 @@ set showmode        " 命令行显示vim当前模式
 
 "--find setting--
 set incsearch        " 输入字符串就显示匹配点
-set hlsearch        
+set hlsearch
 
 "--ctags setting--
 " 按下F5重新生成tag文件，并更新taglist
@@ -208,3 +216,10 @@ set tags=tags
 set tags+=./tags "add current directory's generated tags file
 set tags+=~/openjdk-7u60/tags "add new tags file(刚刚生成tags的路径，在ctags -R 生成tags文件后，不要将tags移动到别的目录，否则ctrl+］时，会提示找不到源码文件)
 set tags+=~/ColinProjects/cloud-debug-java
+
+
+
+"ctags"
+"========================="
+set tags+=~/.vim/systags
+"========================="
